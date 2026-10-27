@@ -130,7 +130,7 @@ def render_video(script,output,niche="Psychology",resolution="720p",seconds_per_
     ffmpeg=imageio_ffmpeg.get_ffmpeg_exe()
     # Stream RGB frames directly to ffmpeg to avoid huge temporary frame files.
     cmd=[ffmpeg,"-y","-loglevel","error","-f","rawvideo","-vcodec","rawvideo","-pix_fmt","rgb24","-s",f"{w}x{h}","-r",str(fps),"-i","pipe:0"]
-    if voice_audio:cmd+=["-i",str(voice_audio),"-map","0:v:0","-map","1:a:0","-c:a","aac","-b:a","160k","-shortest"]
+    if voice_audio:cmd+=["-i",str(voice_audio),"-map","0:v:0","-map","1:a:0","-af","apad","-t",str(len(scenes)*seconds_per_scene),"-c:a","aac","-b:a","160k"]
     cmd+=["-c:v","libx264","-preset","veryfast","-crf","23","-pix_fmt","yuv420p","-movflags","+faststart",output]
     proc=subprocess.Popen(cmd,stdin=subprocess.PIPE,stderr=subprocess.PIPE)
     try:
