@@ -5,7 +5,7 @@ const palettes={Psychology:["#101b2b","#45e2d4"],Science:["#0b1936","#68bcff"],H
 const verbs=[["run",/\b(run|ran|running|escape|chase|flee|rushed)\b/i],["jump",/\b(jump|leap|fly|gravity)\b/i],["fight",/\b(fight|punch|battle|attack|hit)\b/i],["fall",/\b(fall|fell|collapse|crash|drop)\b/i],["fear",/\b(fear|scared|terrifying|shadow|monster|danger)\b/i],["think",/\b(think|thought|wonder|why|realize|remember|imagine)\b/i]];
 function parseScript(raw){const text=raw.replace(/\s+/g," ").trim();if(!text)throw Error("Please paste a script.");
  const out=[];for(const sentence of text.split(/(?<=[.!?])\s+/)){let words=sentence.split(" ");while(words.length){out.push(words.splice(0,26).join(" "));}}
- if(out.length>180)throw Error("Maximum 180 scenes. Shorten your script.");return out.map((text,i)=>({text,action:(verbs.find(([,re])=>re.test(text))||["walk"])[0],i}));}
+ if(out.length>500)throw Error("Maximum 500 scenes. Shorten your script.");return out.map((text,i)=>({text,action:(verbs.find(([,re])=>re.test(text))||["walk"])[0],i}));}
 let playing=false,abort=false,recorder=null,raf=0;
 function line(points,color,width){ctx.beginPath();ctx.moveTo(...points[0]);for(let i=1;i<points.length;i++)ctx.lineTo(...points[i]);ctx.strokeStyle=color;ctx.lineWidth=width;ctx.lineCap="round";ctx.lineJoin="round";ctx.stroke();}
 function draw(scene,t,duration,niche,captions){
@@ -77,3 +77,6 @@ async function play(exporting){if(playing)return;let s;try{s=settings();}catch(e
 $("preview").onclick=()=>play(false);
 $("export").onclick=()=>play(true);
 draw({text:"Your animation starts here",action:"walk",i:0},0,4,"Psychology",true);
+
+function estimateDuration(){try{const n=parseScript($("script").value).length;const mins=n*Number($("seconds").value)/60;$("estimate").textContent="Estimated silent video: "+mins.toFixed(1)+" min | "+n+" scenes. Target: 6-15 min. Narration not yet included.";}catch(e){$("estimate").textContent=e.message;}}
+$("script").addEventListener("input",estimateDuration);$("seconds").addEventListener("input",estimateDuration);estimateDuration();
