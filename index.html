@@ -17,18 +17,18 @@ canvas{display:block;width:100%;height:auto;aspect-ratio:16/9;border-radius:10px
 small{color:#9daec8}
 </style></head><body>
 <h1>STICKVERSE <span style="color:#43e3d0">STUDIO</span></h1>
-<p>Browser-only stickman animator · No Colab · No NotebookLM · No API key</p>
+<p>Android-friendly · Four channels · No Colab · No paid API</p>
 <div class="panel">
 <label for="script">English story / script</label>
 <textarea id="script">The last human walked into an abandoned city. He wondered where everyone had gone. Suddenly, a terrifying shadow appeared. He ran down the empty street. He jumped across a broken bridge. Then he realized the shadow was following him.</textarea>
 <div class="grid">
-<div><label for="niche">Niche</label><select id="niche"><option>Psychology</option><option>Science</option><option>Horror</option><option>Survival</option><option>History</option><option>Comedy</option></select></div>
+<div><label for="niche">Niche</label><select id="niche"><option value="Psychology">1 - Dark Psychology</option><option value="Horror">2 - Mystery and Horror</option><option value="Science" selected>3 - Stickman What-If</option><option value="History">4 - Strange History</option></select></div>
 <div><label for="quality">Export size</label><select id="quality"><option value="640">360p · faster</option><option value="1280" selected>720p</option><option value="1920">1080p · slower</option></select></div>
 <div><label for="seconds">Seconds per scene</label><input id="seconds" type="number" min="2" max="15" value="4"></div>
 <div><label for="fps">Export FPS</label><select id="fps"><option>12</option><option selected>24</option><option>30</option></select></div>
 </div>
 <label><input id="captions" type="checkbox" checked style="width:auto"> Dynamic captions</label>
-<div class="actions"><button id="preview">▶ Preview</button><button id="export">● Record & Export</button><button id="stop" class="secondary" disabled>■ Stop</button></div>
+<p id="estimate" class="muted"></p><div class="actions"><button id="preview">▶ Preview</button><button id="export">● Record & Export</button><button id="stop" class="secondary" disabled>■ Stop</button></div>
 <p id="status" role="status">Ready. Preview first, then export. Video export records in real time.</p><progress id="progress" max="100" value="0"></progress>
 </div>
 <div class="panel"><canvas id="canvas" width="1280" height="720"></canvas><p><small>Export uses your browser's MediaRecorder. WebM is common on Android; MP4 is used only if the browser supports it. No voice/audio is included in this version. Keep this tab visible while recording.</small></p><div id="downloads"></div></div>
