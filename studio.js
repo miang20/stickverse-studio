@@ -15,16 +15,27 @@ function draw(scene,t,duration,niche,captions){
  for(let i=0;i<14;i++){const x=((i*130-t*17*unit)%(w+200)+w+200)%(w+200)-100;const height=(125+(i*73)%140)*unit;ctx.fillStyle="#243248";ctx.fillRect(x,ground-height,78*unit,height);ctx.fillStyle="#344b60";for(let j=0;j<3;j++)ctx.fillRect(x+15*unit,ground-height+(30+j*27)*unit,9*unit,8*unit);}
  ctx.fillStyle="#152e48";ctx.beginPath();ctx.arc(w*.81,h*.19,70*unit,0,Math.PI*2);ctx.fill();
  line([[0,ground],[w,ground]],color,3*unit);
+ // Scene-specific illustrated props and cinematic lighting (offline canvas)
+ const mood=scene.i%5;
+ ctx.save();ctx.globalAlpha=.18;ctx.fillStyle=color;
+ if(mood===0){for(let k=0;k<5;k++){ctx.beginPath();ctx.arc(w*(.1+k*.2),h*.22,(22+k*7)*unit,0,Math.PI*2);ctx.fill();}}
+ if(mood===1){for(let k=0;k<7;k++){let xx=(k*.16+.05)*w;ctx.fillRect(xx,ground-(180+k%3*70)*unit,12*unit,(180+k%3*70)*unit);}}
+ if(mood===2){ctx.beginPath();ctx.ellipse(w*.73,h*.36,170*unit,95*unit,0,0,Math.PI*2);ctx.fill();}
+ if(mood===3){for(let k=0;k<9;k++){let xx=w*(k/9);ctx.fillRect(xx,ground-35*unit,65*unit,35*unit);}}
+ if(mood===4){for(let k=0;k<10;k++){ctx.beginPath();ctx.arc(w*(k*.11),h*(.12+(k%3)*.13),8*unit,0,Math.PI*2);ctx.fill();}}
+ ctx.restore();
+ const vignette=ctx.createRadialGradient(w/2,h/2,h*.1,w/2,h/2,w*.75);
+ vignette.addColorStop(0,"#00000000");vignette.addColorStop(1,"#00000088");ctx.fillStyle=vignette;ctx.fillRect(0,0,w,h);
  const phase=t*(scene.action==="run"?14:scene.action==="walk"?8:6);
  const progress=Math.min(1,t/duration);
  const x=w*(scene.action==="run"||scene.action==="walk"?.19+.59*progress:.48);
  let y=ground-95*unit+Math.sin(phase)*4*unit;
  if(scene.action==="jump")y-=Math.abs(Math.sin(t*2.6))*135*unit;
  if(scene.action==="fall")y+=Math.min(1,t)*65*unit;
- const headY=y-135*unit;
+ const headY=y-135*unit;\n // Animated face reacts to the scene action
  ctx.strokeStyle=color;ctx.lineWidth=8*unit;ctx.beginPath();ctx.arc(x,headY,26*unit,0,Math.PI*2);ctx.stroke();
  ctx.fillStyle="#fff";for(const dx of [-10,10]){ctx.beginPath();ctx.arc(x+dx*unit,headY-3*unit,3.5*unit,0,Math.PI*2);ctx.fill();}
- const shoulder=headY+38*unit,hip=y-36*unit,swing=Math.sin(phase)*35*unit;
+ if(scene.action==="fear"){ctx.beginPath();ctx.ellipse(x,headY+12*unit,6*unit,10*unit,0,0,Math.PI*2);ctx.stroke();}else if(scene.action==="think"){line([[x-9*unit,headY+12*unit],[x+9*unit,headY+10*unit]],color,2*unit);}else{ctx.beginPath();ctx.arc(x,headY+4*unit,12*unit,.15,Math.PI-.15);ctx.stroke();}\n const shoulder=headY+38*unit,hip=y-36*unit,swing=Math.sin(phase)*35*unit;
  line([[x,shoulder],[x,hip]],color,8*unit);
  if(scene.action==="fight"){line([[x,shoulder],[x+75*unit,shoulder-25*unit+swing/3]],color,8*unit);line([[x,shoulder],[x-35*unit,shoulder+35*unit]],color,8*unit);}
  else if(scene.action==="fear"){line([[x,shoulder],[x-45*unit,shoulder-45*unit]],color,8*unit);line([[x,shoulder],[x+45*unit,shoulder-45*unit]],color,8*unit);}
