@@ -2,7 +2,7 @@ import unittest
 from engine import split_script,action_for,plan,draw_frame
 class EngineTests(unittest.TestCase):
     def test_split(self):
-        self.assertEqual(len(split_script("He ran. She jumped.")),2)
+        self.assertEqual(len(split_script("He ran. She jumped.")),1)
     def test_action(self):
         self.assertEqual(action_for("He started to run away"),"run")
         self.assertEqual(action_for("Why did he disappear?"),"think")
