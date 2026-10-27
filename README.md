@@ -1,31 +1,25 @@
-# STICKVERSE STUDIO
+# STICKVERSE STUDIO — Browser Edition
 
-Standalone Android-friendly **procedural 2D stickman animation** tool. **No NotebookLM and no mandatory paid AI API.**
+**Primary app:** [index.html](index.html) + [studio.js](studio.js). Runs directly in Android Chrome using HTML Canvas and MediaRecorder. **No Google Colab, NotebookLM, account login, paid API, server, or API key.**
 
-## Implemented prototype
-- Script split into scenes, keyword-driven movement (walk/run/jump/fall/fight/fear/think)
-- Six niche color palettes: psychology, science, horror, survival, history, comedy
-- Actual animated frame sequences, parallax-style backgrounds, expressive faces and dynamic captions
-- 16:9 MP4 output in 720p or 1080p via FFmpeg
-- Optional online Edge TTS English narration (needs internet)
-- Scene-plan JSON, Gradio UI and password-protected temporary Colab share link
+## Features currently implemented
+- Paste an English script; split into up to 180 short scenes
+- Niche presets: Psychology, Science, Horror, Survival, History, Comedy
+- Moving stickman with simple walk, run, jump, fall, fight, fear and think motions, plus scrolling backgrounds
+- Captions, 16:9 canvas, 360p/720p/1080p selections, real-time browser recording
+- Download WebM on typical Android Chrome; MP4 only on browsers supporting MP4 MediaRecorder
+- Preview without exporting
 
-## Launch from Android Google Colab
-Open a new Colab notebook, add one code cell, run:
+## Open as website (GitHub Pages)
+1. Open repository **Settings → Pages**.
+2. Set **Build and deployment → Source: GitHub Actions**.
+3. GitHub Pages workflow [pages.yml](.github/workflows/pages.yml) deploys the site. Check **Actions** for result.
+4. Expected site address after successful deployment: `https://miang20.github.io/stickverse-studio/`. Do not assume it is live until the workflow succeeds.
 
-```python
-!python - <<'PY'
-import urllib.request
-url="https://raw.githubusercontent.com/miang20/stickverse-studio/main/COLAB_LAUNCH.py"
-urllib.request.urlretrieve(url,"/content/stickverse_launch.py")
-PY
-!python /content/stickverse_launch.py
-```
+## Limitations — please read
+This is an **early browser-only animation prototype**. It is NOT a professional AI video generator, and its animation actions are selected using basic keywords. Character, backgrounds, and movements are limited. **No narration, audio track, music, lip-sync, automatic thumbnails, or SEO generation yet.** Export runs in **real time** (a 10-minute video takes at least 10 minutes), and Android may interrupt recording when the browser is backgrounded or device memory is low. No universal MP4 export is guaranteed: Chrome may provide WebM only. Long-form 1080p export may fail on phones; start with 360p/720p. Rendering quality and GitHub Pages deployment have not been verified on the user's Android device.
 
-The notebook installs dependencies, clones/pulls the repository, prints a login username/password and launches a temporary Gradio link. Keep Colab running. Do not share the password.
+### Legacy prototype
+The Python files (`engine.py`, `studio.py`, `COLAB_LAUNCH.py`) are **legacy experiments** and **not needed** by the browser app. No Colab integration is required.
 
-## Important limitations
-This is an **initial working-code prototype, not a verified production renderer**. Actions are selected by simple English keyword matching; no AI semantic direction or advanced character rigging yet. The same base stickman and backgrounds are reused. Voice timing is not synchronized to scenes: long narration may be cut off, and short narration may end before video. 10–15 minute videos will be CPU-intensive and slow on free Colab; sessions may expire. Online TTS is not guaranteed. Free GPU or permanent hosting is not included. No automatic viral success or monetization guarantee. Originality, YouTube policy compliance and rights clearance remain the creator's responsibility.
-
-## Development tests
-`python -m unittest discover -s tests -v`
+YouTube monetization is not guaranteed. Avoid mass-produced repetitive content; add original storytelling and distinctive production.
